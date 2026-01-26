@@ -1,0 +1,1348 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\test> wsl
+rahul@LAPTOP-MOMCE8G7:/mnt/c/Users/test$ uname -a
+Linux LAPTOP-MOMCE8G7 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+rahul@LAPTOP-MOMCE8G7:/mnt/c/Users/test$ cd /home/rahul/gem5
+pwd
+ls
+/home/rahul/gem5
+CODE-OF-CONDUCT.md  RELEASE-NOTES.md  compute.c  m5out                     m5out_hello                src
+CONTRIBUTING.md     SConstruct        configs    m5out_compute_1GHz        mem_bench                  system
+COPYING             TESTING.md        docs       m5out_compute_2GHz        mem_bench.c                tests
+KCONFIG.md          build             ext        m5out_compute_500MHz      optional-requirements.txt  util
+LICENSE             build_opts        hello      m5out_compute_base        pyproject.toml
+MAINTAINERS.yaml    build_tools       hello.c    m5out_compute_cache_base  requirements.txt
+README.md           compute           include    m5out_compute_cache_opt   site_scons
+rahul@LAPTOP-MOMCE8G7:~/gem5$ gcc -O2 mem_bench.c -o mem_bench
+rahul@LAPTOP-MOMCE8G7:~/gem5$ rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 15:42:41
+gem5 executing on LAPTOP-MOMCE8G7, pid 423
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ ls m5out
+citations.bib  config.ini  config.json  fs  stats.txt
+rahul@LAPTOP-MOMCE8G7:~/gem5$ less m5out/stats.txt
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -E "dcache|icache|l2|dtb|itb|MissRate|Hits|Misses|Avg" -n m5out/stats.txt | head -n 40
+grep -E "cache_line_size|l1|l2|assoc|tlb" -n m5out/config.ini | head -n 60
+225:system.cpu.dcache.demandHits::cpu.data        3706782                       # number of demand (read+write) hits (Count)
+226:system.cpu.dcache.demandHits::total           3706782                       # number of demand (read+write) hits (Count)
+227:system.cpu.dcache.overallHits::cpu.data       3706782                       # number of overall hits (Count)
+228:system.cpu.dcache.overallHits::total          3706782                       # number of overall hits (Count)
+229:system.cpu.dcache.demandMisses::cpu.data      1050017                       # number of demand (read+write) misses (Count)
+230:system.cpu.dcache.demandMisses::total         1050017                       # number of demand (read+write) misses (Count)
+231:system.cpu.dcache.overallMisses::cpu.data      1050017                       # number of overall misses (Count)
+232:system.cpu.dcache.overallMisses::total        1050017                       # number of overall misses (Count)
+233:system.cpu.dcache.demandAccesses::cpu.data      4756799                       # number of demand (read+write) accesses (Count)
+234:system.cpu.dcache.demandAccesses::total       4756799                       # number of demand (read+write) accesses (Count)
+235:system.cpu.dcache.overallAccesses::cpu.data      4756799                       # number of overall (read+write) accesses (Count)
+236:system.cpu.dcache.overallAccesses::total      4756799                       # number of overall (read+write) accesses (Count)
+237:system.cpu.dcache.demandMissRate::cpu.data     0.220740                       # miss rate for demand accesses (Ratio)
+238:system.cpu.dcache.demandMissRate::total      0.220740                       # miss rate for demand accesses (Ratio)
+239:system.cpu.dcache.overallMissRate::cpu.data     0.220740                       # miss rate for overall accesses (Ratio)
+240:system.cpu.dcache.overallMissRate::total     0.220740                       # miss rate for overall accesses (Ratio)
+241:system.cpu.dcache.blockedCycles::no_mshrs            0                       # number of cycles access was blocked (Cycle)
+242:system.cpu.dcache.blockedCycles::no_wbuffers            0                       # number of cycles access was blocked (Cycle)
+243:system.cpu.dcache.blockedCycles::no_targets            0                       # number of cycles access was blocked (Cycle)
+244:system.cpu.dcache.blockedCauses::no_mshrs            0                       # number of times access was blocked (Count)
+245:system.cpu.dcache.blockedCauses::no_wbuffers            0                       # number of times access was blocked (Count)
+246:system.cpu.dcache.blockedCauses::no_targets            0                       # number of times access was blocked (Count)
+247:system.cpu.dcache.avgBlocked::no_mshrs            nan                       # average number of cycles each access was blocked ((Cycle/Count))
+248:system.cpu.dcache.avgBlocked::no_wbuffers          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+249:system.cpu.dcache.avgBlocked::no_targets          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+250:system.cpu.dcache.writebacks::writebacks       524904                       # number of writebacks (Count)
+251:system.cpu.dcache.writebacks::total            524904                       # number of writebacks (Count)
+252:system.cpu.dcache.replacements                1048995                       # number of replacements (Count)
+253:system.cpu.dcache.LockedRMWReadReq.hits::cpu.data           16                       # number of LockedRMWReadReq hits (Count)
+254:system.cpu.dcache.LockedRMWReadReq.hits::total           16                       # number of LockedRMWReadReq hits (Count)
+255:system.cpu.dcache.LockedRMWReadReq.misses::cpu.data            2                       # number of LockedRMWReadReq misses (Count)
+256:system.cpu.dcache.LockedRMWReadReq.misses::total            2                       # number of LockedRMWReadReq misses (Count)
+257:system.cpu.dcache.LockedRMWReadReq.accesses::cpu.data           18                       # number of LockedRMWReadReq accesses(hits+misses) (Count)
+258:system.cpu.dcache.LockedRMWReadReq.accesses::total           18                       # number of LockedRMWReadReq accesses(hits+misses) (Count)
+259:system.cpu.dcache.LockedRMWReadReq.missRate::cpu.data     0.111111                       # miss rate for LockedRMWReadReq accesses (Ratio)
+260:system.cpu.dcache.LockedRMWReadReq.missRate::total     0.111111                       # miss rate for LockedRMWReadReq accesses (Ratio)
+261:system.cpu.dcache.LockedRMWWriteReq.hits::cpu.data           18                       # number of LockedRMWWriteReq hits (Count)
+262:system.cpu.dcache.LockedRMWWriteReq.hits::total           18                       # number of LockedRMWWriteReq hits (Count)
+263:system.cpu.dcache.LockedRMWWriteReq.accesses::cpu.data           18                       # number of LockedRMWWriteReq accesses(hits+misses) (Count)
+264:system.cpu.dcache.LockedRMWWriteReq.accesses::total           18                       # number of LockedRMWWriteReq accesses(hits+misses) (Count)
+13:children=clk_domain cpu cpu_clk_domain cpu_voltage_domain dvfs_handler l2 mem_ctrls membus redirect_paths0 redirect_paths1 redirect_paths2 tol2bus voltage_domain workload
+15:cache_line_size=64
+93:assoc=2
+122:mem_side=system.tol2bus.cpu_side_ports[1]
+141:assoc=2
+159:assoc=2
+183:assoc=2
+212:mem_side=system.tol2bus.cpu_side_ports[3]
+231:assoc=2
+249:assoc=2
+268:assoc=2
+297:mem_side=system.tol2bus.cpu_side_ports[0]
+316:assoc=2
+334:assoc=2
+386:assoc=2
+415:mem_side=system.tol2bus.cpu_side_ports[2]
+434:assoc=2
+452:assoc=2
+603:[system.l2]
+607:assoc=8
+620:power_state=system.l2.power_state
+623:replacement_policy=system.l2.replacement_policy
+629:tags=system.l2.tags
+635:cpu_side=system.tol2bus.mem_side_ports[0]
+638:[system.l2.power_state]
+648:[system.l2.replacement_policy]
+652:[system.l2.tags]
+655:assoc=8
+660:indexing_policy=system.l2.tags.indexing_policy
+663:power_state=system.l2.tags.power_state
+664:replacement_policy=system.l2.replacement_policy
+671:[system.l2.tags.indexing_policy]
+673:assoc=8
+678:[system.l2.tags.power_state]
+843:cpu_side_ports=system.system_port system.l2.mem_side system.cpu.interrupts.int_requestor
+881:[system.tol2bus]
+894:power_state=system.tol2bus.power_state
+896:snoop_filter=system.tol2bus.snoop_filter
+902:mem_side_ports=system.l2.cpu_side
+904:[system.tol2bus.power_state]
+914:[system.tol2bus.snoop_filter]
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "system\.cpu\.icache\." m5out/stats.txt | grep -iE "Hits|Misses|MissRate" | head -n 40
+grep -iE "system\.l2\." m5out/stats.txt | grep -iE "Hits|Misses|MissRate|Avg" | head -n 80
+system.cpu.icache.demandHits::cpu.inst       15866661                       # number of demand (read+write) hits (Count)
+system.cpu.icache.demandHits::total          15866661                       # number of demand (read+write) hits (Count)
+system.cpu.icache.overallHits::cpu.inst      15866661                       # number of overall hits (Count)
+system.cpu.icache.overallHits::total         15866661                       # number of overall hits (Count)
+system.cpu.icache.demandMisses::cpu.inst         1263                       # number of demand (read+write) misses (Count)
+system.cpu.icache.demandMisses::total            1263                       # number of demand (read+write) misses (Count)
+system.cpu.icache.overallMisses::cpu.inst         1263                       # number of overall misses (Count)
+system.cpu.icache.overallMisses::total           1263                       # number of overall misses (Count)
+system.cpu.icache.demandMissRate::cpu.inst     0.000080                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.demandMissRate::total      0.000080                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.overallMissRate::cpu.inst     0.000080                       # miss rate for overall accesses (Ratio)
+system.cpu.icache.overallMissRate::total     0.000080                       # miss rate for overall accesses (Ratio)
+system.cpu.icache.ReadReq.hits::cpu.inst     15866661                       # number of ReadReq hits (Count)
+system.cpu.icache.ReadReq.hits::total        15866661                       # number of ReadReq hits (Count)
+system.cpu.icache.ReadReq.misses::cpu.inst         1263                       # number of ReadReq misses (Count)
+system.cpu.icache.ReadReq.misses::total          1263                       # number of ReadReq misses (Count)
+system.cpu.icache.ReadReq.accesses::cpu.inst     15867924                       # number of ReadReq accesses(hits+misses) (Count)
+system.cpu.icache.ReadReq.accesses::total     15867924                       # number of ReadReq accesses(hits+misses) (Count)
+system.cpu.icache.ReadReq.missRate::cpu.inst     0.000080                       # miss rate for ReadReq accesses (Ratio)
+system.cpu.icache.ReadReq.missRate::total     0.000080                       # miss rate for ReadReq accesses (Ratio)
+system.l2.demandHits::cpu.inst                     60                       # number of demand (read+write) hits (Count)
+system.l2.demandHits::cpu.data                     69                       # number of demand (read+write) hits (Count)
+system.l2.demandHits::total                       129                       # number of demand (read+write) hits (Count)
+system.l2.overallHits::cpu.inst                    60                       # number of overall hits (Count)
+system.l2.overallHits::cpu.data                    69                       # number of overall hits (Count)
+system.l2.overallHits::total                      129                       # number of overall hits (Count)
+system.l2.demandMisses::cpu.inst                 1203                       # number of demand (read+write) misses (Count)
+system.l2.demandMisses::cpu.data              1049950                       # number of demand (read+write) misses (Count)
+system.l2.demandMisses::total                 1051153                       # number of demand (read+write) misses (Count)
+system.l2.overallMisses::cpu.inst                1203                       # number of overall misses (Count)
+system.l2.overallMisses::cpu.data             1049950                       # number of overall misses (Count)
+system.l2.overallMisses::total                1051153                       # number of overall misses (Count)
+system.l2.demandMissRate::cpu.inst           0.952494                       # miss rate for demand accesses (Ratio)
+system.l2.demandMissRate::cpu.data           0.999934                       # miss rate for demand accesses (Ratio)
+system.l2.demandMissRate::total              0.999877                       # miss rate for demand accesses (Ratio)
+system.l2.overallMissRate::cpu.inst          0.952494                       # miss rate for overall accesses (Ratio)
+system.l2.overallMissRate::cpu.data          0.999934                       # miss rate for overall accesses (Ratio)
+system.l2.overallMissRate::total             0.999877                       # miss rate for overall accesses (Ratio)
+system.l2.avgBlocked::no_mshrs                    nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.l2.avgBlocked::no_wbuffers                 nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.l2.avgBlocked::no_targets                  nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.l2.ReadCleanReq.hits::cpu.inst              60                       # number of ReadCleanReq hits (Count)
+system.l2.ReadCleanReq.hits::total                 60                       # number of ReadCleanReq hits (Count)
+system.l2.ReadCleanReq.misses::cpu.inst          1203                       # number of ReadCleanReq misses (Count)
+system.l2.ReadCleanReq.misses::total             1203                       # number of ReadCleanReq misses (Count)
+system.l2.ReadCleanReq.accesses::cpu.inst         1263                       # number of ReadCleanReq accesses(hits+misses) (Count)
+system.l2.ReadCleanReq.accesses::total           1263                       # number of ReadCleanReq accesses(hits+misses) (Count)
+system.l2.ReadCleanReq.missRate::cpu.inst     0.952494                       # miss rate for ReadCleanReq accesses (Ratio)
+system.l2.ReadCleanReq.missRate::total       0.952494                       # miss rate for ReadCleanReq accesses (Ratio)
+system.l2.ReadExReq.hits::cpu.data                  9                       # number of ReadExReq hits (Count)
+system.l2.ReadExReq.hits::total                     9                       # number of ReadExReq hits (Count)
+system.l2.ReadExReq.misses::cpu.data           524648                       # number of ReadExReq misses (Count)
+system.l2.ReadExReq.misses::total              524648                       # number of ReadExReq misses (Count)
+system.l2.ReadExReq.accesses::cpu.data         524657                       # number of ReadExReq accesses(hits+misses) (Count)
+system.l2.ReadExReq.accesses::total            524657                       # number of ReadExReq accesses(hits+misses) (Count)
+system.l2.ReadExReq.missRate::cpu.data       0.999983                       # miss rate for ReadExReq accesses (Ratio)
+system.l2.ReadExReq.missRate::total          0.999983                       # miss rate for ReadExReq accesses (Ratio)
+system.l2.ReadSharedReq.hits::cpu.data             60                       # number of ReadSharedReq hits (Count)
+system.l2.ReadSharedReq.hits::total                60                       # number of ReadSharedReq hits (Count)
+system.l2.ReadSharedReq.misses::cpu.data       525302                       # number of ReadSharedReq misses (Count)
+system.l2.ReadSharedReq.misses::total          525302                       # number of ReadSharedReq misses (Count)
+system.l2.ReadSharedReq.accesses::cpu.data       525362                       # number of ReadSharedReq accesses(hits+misses) (Count)
+system.l2.ReadSharedReq.accesses::total        525362                       # number of ReadSharedReq accesses(hits+misses) (Count)
+system.l2.ReadSharedReq.missRate::cpu.data     0.999886                       # miss rate for ReadSharedReq accesses (Ratio)
+system.l2.ReadSharedReq.missRate::total      0.999886                       # miss rate for ReadSharedReq accesses (Ratio)
+system.l2.WritebackClean.hits::writebacks          762                       # number of WritebackClean hits (Count)
+system.l2.WritebackClean.hits::total              762                       # number of WritebackClean hits (Count)
+system.l2.WritebackClean.accesses::writebacks          762                       # number of WritebackClean accesses(hits+misses) (Count)
+system.l2.WritebackClean.accesses::total          762                       # number of WritebackClean accesses(hits+misses) (Count)
+system.l2.WritebackDirty.hits::writebacks       524904                       # number of WritebackDirty hits (Count)
+system.l2.WritebackDirty.hits::total           524904                       # number of WritebackDirty hits (Count)
+system.l2.WritebackDirty.accesses::writebacks       524904                       # number of WritebackDirty accesses(hits+misses) (Count)
+system.l2.WritebackDirty.accesses::total       524904                       # number of WritebackDirty accesses(hits+misses) (Count)
+system.l2.tags.avgRefs                       1.998437                       # Average number of references to valid blocks. ((Count/Count))
+system.l2.tags.avgOccs::writebacks           0.000001                       # Average percentage of cache occupancy ((Ratio/Tick))
+system.l2.tags.avgOccs::cpu.inst             0.001528                       # Average percentage of cache occupancy ((Ratio/Tick))
+system.l2.tags.avgOccs::cpu.data             0.969345                       # Average percentage of cache occupancy ((Ratio/Tick))
+system.l2.tags.avgOccs::total                0.970874                       # Average percentage of cache occupancy ((Ratio/Tick))
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "Avg.*Lat|avg.*lat|latency|requestor.*Avg|mem_ctrl.*Avg" m5out/stats.txt | head -n 120
+system.mem_ctrls.priorityMinLatency      0.000000000000                       # per QoS priority minimum request to response latency (Second)
+system.mem_ctrls.priorityMaxLatency      0.000000000000                       # per QoS priority maximum request to response latency (Second)
+system.mem_ctrls.avgRdQLen                       0.00                       # Average read queue length when enqueuing ((Count/Tick))
+system.mem_ctrls.avgWrQLen                       0.00                       # Average write queue length when enqueuing ((Count/Tick))
+system.mem_ctrls.avgRdBWSys                0.00000000                       # Average system read bandwidth in Byte/s ((Byte/Second))
+system.mem_ctrls.avgWrBWSys                0.00000000                       # Average system write bandwidth in Byte/s ((Byte/Second))
+system.mem_ctrls.avgGap                           nan                       # Average gap between requests ((Tick/Count))
+system.mem_ctrls.dram.avgQLat                     nan                       # Average queueing delay per DRAM burst ((Tick/Count))
+system.mem_ctrls.dram.avgBusLat                   nan                       # Average bus latency per DRAM burst ((Tick/Count))
+system.mem_ctrls.dram.avgMemAccLat                nan                       # Average memory access latency per DRAM burst ((Tick/Count))
+system.mem_ctrls.dram.avgRdBW                       0                       # Average DRAM read bandwidth in MiBytes/s ((Byte/Second))
+system.mem_ctrls.dram.avgWrBW                       0                       # Average DRAM write bandwidth in MiBytes/s ((Byte/Second))
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -E "system.cpu.cpi|system.cpu.numCycles|system.cpu.dcache.overallAccesses::total" m5out/stats.txt
+system.cpu.numCycles                         30639964                       # Number of cpu cycles simulated (Cycle)
+system.cpu.cpi                               2.002127                       # CPI: cycles per instruction (core level) ((Cycle/Count))
+system.cpu.dcache.overallAccesses::total      4756799                       # number of overall (read+write) accesses (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ python3 configs/deprecated/example/se.py --help | grep -iE "caches|l2cache|l1|l2|size|assoc|line|block"
+Traceback (most recent call last):
+  File "/home/rahul/gem5/configs/deprecated/example/se.py", line 47, in <module>
+    import m5
+ModuleNotFoundError: No module named 'm5'
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+./build/X86/gem5.opt configs/deprecated/example/se.py --help | head -n 120
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 15:53:38
+gem5 executing on LAPTOP-MOMCE8G7, pid 484
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py --help
+
+usage: se.py [-h] [-n NUM_CPUS] [--sys-voltage SYS_VOLTAGE]
+             [--sys-clock SYS_CLOCK] [--list-mem-types]
+             [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+             [--mem-channels MEM_CHANNELS] [--mem-ranks MEM_RANKS]
+             [--mem-size MEM_SIZE] [--enable-dram-powerdown]
+             [--mem-channels-intlv MEM_CHANNELS_INTLV] [--memchecker]
+             [--external-memory-system EXTERNAL_MEMORY_SYSTEM]
+             [--tlm-memory TLM_MEMORY] [--caches] [--l2cache]
+             [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+             [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE]
+             [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE]
+             [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+             [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC]
+             [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS]
+             [--rel-max-tick TICKS] [--maxtime MAXTIME] [-P PARAM]
+             [--list-cpu-types]
+             [--cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--list-bp-types] [--list-indirect-bp-types]
+             [--bp-type {BranchPredictor,GshareBP}]
+             [--indirect-bp-type {SimpleIndirectPredictor}] [--list-rp-types]
+             [--list-hwp-types]
+             [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--checker] [--cpu-clock CPU_CLOCK] [--smt] [--elastic-trace-en]
+             [--inst-trace-file INST_TRACE_FILE]
+             [--data-trace-file DATA_TRACE_FILE] [--dist]
+             [--dist-sync-on-pseudo-op] [--is-switch] [--dist-rank DIST_RANK]
+             [--dist-size DIST_SIZE] [--dist-server-name DIST_SERVER_NAME]
+             [--dist-server-port DIST_SERVER_PORT]
+             [--dist-sync-repeat DIST_SYNC_REPEAT]
+             [--dist-sync-start DIST_SYNC_START]
+             [--ethernet-linkspeed ETHERNET_LINKSPEED]
+             [--ethernet-linkdelay ETHERNET_LINKDELAY] [-I MAXINSTS]
+             [--work-item-id WORK_ITEM_ID] [--num-work-ids NUM_WORK_IDS]
+             [--work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT]
+             [--work-end-exit-count WORK_END_EXIT_COUNT]
+             [--work-begin-exit-count WORK_BEGIN_EXIT_COUNT]
+             [--init-param INIT_PARAM] [--initialize-only]
+             [--simpoint-profile] [--simpoint-interval SIMPOINT_INTERVAL]
+             [--take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS]
+             [--restore-simpoint-checkpoint]
+             [--take-checkpoints TAKE_CHECKPOINTS]
+             [--max-checkpoints MAX_CHECKPOINTS]
+             [--checkpoint-dir CHECKPOINT_DIR] [-r CHECKPOINT_RESTORE]
+             [--checkpoint-at-end]
+             [--work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT]
+             [--work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT]
+             [--work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT]
+             [--restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--repeat-switch REPEAT_SWITCH] [-s STANDARD_SWITCH]
+             [-p PROG_INTERVAL] [-W WARMUP_INSTS] [--bench BENCH]
+             [-F FAST_FORWARD] [-S] [--at-instruction]
+             [--spec-input {ref,test,train,smred,mdred,lgred}]
+             [--arm-iset {arm,thumb,aarch64}] [--stats-root STATS_ROOT]
+             [--override-vendor-string OVERRIDE_VENDOR_STRING] [-c CMD]
+             [-o OPTIONS] [-e ENV] [-i INPUT] [--output OUTPUT]
+             [--errout ERROUT] [--chroot CHROOT] [--interp-dir INTERP_DIR]
+             [--redirects REDIRECTS] [--wait-gdb]
+
+options:
+  -h, --help            show this help message and exit
+  -n NUM_CPUS, --num-cpus NUM_CPUS
+  --sys-voltage SYS_VOLTAGE
+                        Top-level voltage for blocks running at system power
+                        supply
+  --sys-clock SYS_CLOCK
+                        Top-level clock for blocks running at system speed
+  --list-mem-types      List available memory types
+  --mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}
+                        type of memory to use
+  --mem-channels MEM_CHANNELS
+                        number of memory channels
+  --mem-ranks MEM_RANKS
+                        number of memory ranks per channel
+  --mem-size MEM_SIZE   Specify the physical memory size (single memory)
+  --enable-dram-powerdown
+                        Enable low-power states in DRAMInterface
+  --mem-channels-intlv MEM_CHANNELS_INTLV
+                        Memory channels interleave
+  --memchecker
+  --external-memory-system EXTERNAL_MEMORY_SYSTEM
+                        use external ports of this port_type for caches
+  --tlm-memory TLM_MEMORY
+                        use external port for SystemC TLM cosimulation
+  --caches
+  --l2cache
+  --num-dirs NUM_DIRS
+  --num-l2caches NUM_L2CACHES
+  --num-l3caches NUM_L3CACHES
+  --l1d_size L1D_SIZE
+  --l1i_size L1I_SIZE
+  --l2_size L2_SIZE
+  --l3_size L3_SIZE
+  --l1d_assoc L1D_ASSOC
+  --l1i_assoc L1I_ASSOC
+  --l2_assoc L2_ASSOC
+  --l3_assoc L3_ASSOC
+  --cacheline_size CACHELINE_SIZE
+  --ruby
+  -m TICKS, --abs-max-tick TICKS
+                        Run to absolute simulated tick specified including
+                        ticks from a restored checkpoint
+  --rel-max-tick TICKS  Simulate for specified number of ticks relative to the
+                        simulation start tick (e.g. if restoring a checkpoint)
+  --maxtime MAXTIME     Run to the specified absolute simulated time in
+                        seconds
+  -P PARAM, --param PARAM
+                        Set a SimObject parameter relative to the root node.
+                        An extended Python multi range slicing syntax can be
+                        used for arrays. For example:
+rahul@LAPTOP-MOMCE8G7:~/gem5$ ./build/X86/gem5.opt configs/deprecated/example/se.py --help \
+  | grep -iE "caches|l2cache|l1|l2|size|assoc|line|block"
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py --help
+             [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+             [--mem-size MEM_SIZE] [--enable-dram-powerdown]
+             [--tlm-memory TLM_MEMORY] [--caches] [--l2cache]
+             [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+             [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE]
+             [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE]
+             [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+             [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC]
+             [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS]
+             [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--dist-size DIST_SIZE] [--dist-server-name DIST_SERVER_NAME]
+                        Top-level voltage for blocks running at system power
+                        Top-level clock for blocks running at system speed
+  --mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}
+  --mem-size MEM_SIZE   Specify the physical memory size (single memory)
+                        use external ports of this port_type for caches
+  --caches
+  --l2cache
+  --num-l2caches NUM_L2CACHES
+  --num-l3caches NUM_L3CACHES
+  --l1d_size L1D_SIZE
+  --l1i_size L1I_SIZE
+  --l2_size L2_SIZE
+  --l3_size L3_SIZE
+  --l1d_assoc L1D_ASSOC
+  --l1i_assoc L1I_ASSOC
+  --l2_assoc L2_ASSOC
+  --l3_assoc L3_ASSOC
+  --cacheline_size CACHELINE_SIZE
+  --l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1
+  --l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1 data
+  --l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L2 cache.
+                        Clock for blocks running at CPU speed
+  --dist-size DIST_SIZE
+  --simpoint-profile    Enable basic block profiling for SimPoints
+                        Input set size for SPEC CPU2000 benchmarks.
+rahul@LAPTOP-MOMCE8G7:~/gem5$ mkdir -p results/run1_baseline
+cp m5out/stats.txt results/run1_baseline/stats.txt
+cp m5out/config.ini results/run1_baseline/config.ini
+rahul@LAPTOP-MOMCE8G7:~/gem5$ ./build/X86/gem5.opt configs/deprecated/example/se.py --help | head -n 200
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 15:57:10
+gem5 executing on LAPTOP-MOMCE8G7, pid 497
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py --help
+
+usage: se.py [-h] [-n NUM_CPUS] [--sys-voltage SYS_VOLTAGE]
+             [--sys-clock SYS_CLOCK] [--list-mem-types]
+             [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+             [--mem-channels MEM_CHANNELS] [--mem-ranks MEM_RANKS]
+             [--mem-size MEM_SIZE] [--enable-dram-powerdown]
+             [--mem-channels-intlv MEM_CHANNELS_INTLV] [--memchecker]
+             [--external-memory-system EXTERNAL_MEMORY_SYSTEM]
+             [--tlm-memory TLM_MEMORY] [--caches] [--l2cache]
+             [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+             [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE]
+             [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE]
+             [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+             [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC]
+             [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS]
+             [--rel-max-tick TICKS] [--maxtime MAXTIME] [-P PARAM]
+             [--list-cpu-types]
+             [--cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--list-bp-types] [--list-indirect-bp-types]
+             [--bp-type {BranchPredictor,GshareBP}]
+             [--indirect-bp-type {SimpleIndirectPredictor}] [--list-rp-types]
+             [--list-hwp-types]
+             [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--checker] [--cpu-clock CPU_CLOCK] [--smt] [--elastic-trace-en]
+             [--inst-trace-file INST_TRACE_FILE]
+             [--data-trace-file DATA_TRACE_FILE] [--dist]
+             [--dist-sync-on-pseudo-op] [--is-switch] [--dist-rank DIST_RANK]
+             [--dist-size DIST_SIZE] [--dist-server-name DIST_SERVER_NAME]
+             [--dist-server-port DIST_SERVER_PORT]
+             [--dist-sync-repeat DIST_SYNC_REPEAT]
+             [--dist-sync-start DIST_SYNC_START]
+             [--ethernet-linkspeed ETHERNET_LINKSPEED]
+             [--ethernet-linkdelay ETHERNET_LINKDELAY] [-I MAXINSTS]
+             [--work-item-id WORK_ITEM_ID] [--num-work-ids NUM_WORK_IDS]
+             [--work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT]
+             [--work-end-exit-count WORK_END_EXIT_COUNT]
+             [--work-begin-exit-count WORK_BEGIN_EXIT_COUNT]
+             [--init-param INIT_PARAM] [--initialize-only]
+             [--simpoint-profile] [--simpoint-interval SIMPOINT_INTERVAL]
+             [--take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS]
+             [--restore-simpoint-checkpoint]
+             [--take-checkpoints TAKE_CHECKPOINTS]
+             [--max-checkpoints MAX_CHECKPOINTS]
+             [--checkpoint-dir CHECKPOINT_DIR] [-r CHECKPOINT_RESTORE]
+             [--checkpoint-at-end]
+             [--work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT]
+             [--work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT]
+             [--work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT]
+             [--restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--repeat-switch REPEAT_SWITCH] [-s STANDARD_SWITCH]
+             [-p PROG_INTERVAL] [-W WARMUP_INSTS] [--bench BENCH]
+             [-F FAST_FORWARD] [-S] [--at-instruction]
+             [--spec-input {ref,test,train,smred,mdred,lgred}]
+             [--arm-iset {arm,thumb,aarch64}] [--stats-root STATS_ROOT]
+             [--override-vendor-string OVERRIDE_VENDOR_STRING] [-c CMD]
+             [-o OPTIONS] [-e ENV] [-i INPUT] [--output OUTPUT]
+             [--errout ERROUT] [--chroot CHROOT] [--interp-dir INTERP_DIR]
+             [--redirects REDIRECTS] [--wait-gdb]
+
+options:
+  -h, --help            show this help message and exit
+  -n NUM_CPUS, --num-cpus NUM_CPUS
+  --sys-voltage SYS_VOLTAGE
+                        Top-level voltage for blocks running at system power
+                        supply
+  --sys-clock SYS_CLOCK
+                        Top-level clock for blocks running at system speed
+  --list-mem-types      List available memory types
+  --mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}
+                        type of memory to use
+  --mem-channels MEM_CHANNELS
+                        number of memory channels
+  --mem-ranks MEM_RANKS
+                        number of memory ranks per channel
+  --mem-size MEM_SIZE   Specify the physical memory size (single memory)
+  --enable-dram-powerdown
+                        Enable low-power states in DRAMInterface
+  --mem-channels-intlv MEM_CHANNELS_INTLV
+                        Memory channels interleave
+  --memchecker
+  --external-memory-system EXTERNAL_MEMORY_SYSTEM
+                        use external ports of this port_type for caches
+  --tlm-memory TLM_MEMORY
+                        use external port for SystemC TLM cosimulation
+  --caches
+  --l2cache
+  --num-dirs NUM_DIRS
+  --num-l2caches NUM_L2CACHES
+  --num-l3caches NUM_L3CACHES
+  --l1d_size L1D_SIZE
+  --l1i_size L1I_SIZE
+  --l2_size L2_SIZE
+  --l3_size L3_SIZE
+  --l1d_assoc L1D_ASSOC
+  --l1i_assoc L1I_ASSOC
+  --l2_assoc L2_ASSOC
+  --l3_assoc L3_ASSOC
+  --cacheline_size CACHELINE_SIZE
+  --ruby
+  -m TICKS, --abs-max-tick TICKS
+                        Run to absolute simulated tick specified including
+                        ticks from a restored checkpoint
+  --rel-max-tick TICKS  Simulate for specified number of ticks relative to the
+                        simulation start tick (e.g. if restoring a checkpoint)
+  --maxtime MAXTIME     Run to the specified absolute simulated time in
+                        seconds
+  -P PARAM, --param PARAM
+                        Set a SimObject parameter relative to the root node.
+                        An extended Python multi range slicing syntax can be
+                        used for arrays. For example:
+                        'system.cpu[0,1,3:8:2].max_insts_all_threads = 42'
+                        sets max_insts_all_threads for cpus 0, 1, 3, 5 and 7
+                        Direct parameters of the root object are not
+                        accessible, only parameters of its children.
+  --list-cpu-types      List available CPU types
+  --cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}
+                        type of cpu to run with
+  --list-bp-types       List available branch predictor types
+  --list-indirect-bp-types
+                        List available indirect branch predictor types
+  --bp-type {BranchPredictor,GshareBP}
+                        type of branch predictor to run with (if not set, use
+                        the default branch predictor of the selected CPU)
+  --indirect-bp-type {SimpleIndirectPredictor}
+                        type of indirect branch predictor to run with
+  --list-rp-types       List available replacement policy types
+  --list-hwp-types      List available hardware prefetcher types
+  --l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1
+                        instruction cache. (if not set, use the default
+                        prefetcher of the selected cache)
+  --l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1 data
+                        cache. (if not set, use the default prefetcher of the
+                        selected cache)
+  --l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L2 cache.
+                        (if not set, use the default prefetcher of the
+                        selected cache)
+  --checker
+  --cpu-clock CPU_CLOCK
+                        Clock for blocks running at CPU speed
+  --smt                 Only used if multiple programs are specified. If true,
+                        then the number of threads per cpu is same as the
+                        number of programs.
+  --elastic-trace-en    Enable capture of data dependency and instruction
+                        fetch traces using elastic trace probe.
+  --inst-trace-file INST_TRACE_FILE
+                        Instruction fetch trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --data-trace-file DATA_TRACE_FILE
+                        Data dependency trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --dist                Parallel distributed gem5 simulation.
+  --dist-sync-on-pseudo-op
+                        Use a pseudo-op to start dist-gem5 synchronization.
+  --is-switch           Select the network switch simulator process for
+                        adistributed gem5 run
+  --dist-rank DIST_RANK
+                        Rank of this system within the dist gem5 run.
+  --dist-size DIST_SIZE
+                        Number of gem5 processes within the dist gem5 run.
+  --dist-server-name DIST_SERVER_NAME
+                        Name of the message server host DEFAULT: localhost
+  --dist-server-port DIST_SERVER_PORT
+                        Message server listen port DEFAULT: 2200
+  --dist-sync-repeat DIST_SYNC_REPEAT
+                        Repeat interval for synchronisation barriers among
+                        dist-gem5 processes DEFAULT: --ethernet-linkdelay
+  --dist-sync-start DIST_SYNC_START
+                        Time to schedule the first dist synchronisation
+                        barrier DEFAULT:5200000000000t
+  --ethernet-linkspeed ETHERNET_LINKSPEED
+                        Link speed in bps DEFAULT: 10Gbps
+  --ethernet-linkdelay ETHERNET_LINKDELAY
+                        Link delay in seconds DEFAULT: 10us
+  -I MAXINSTS, --maxinsts MAXINSTS
+                        Total number of instructions to simulate (default: run
+                        forever)
+  --work-item-id WORK_ITEM_ID
+                        the specific work id for exit & checkpointing
+  --num-work-ids NUM_WORK_IDS
+                        Number of distinct work item types
+  --work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT
+                        exit when work starts on the specified cpu
+  --work-end-exit-count WORK_END_EXIT_COUNT
+                        exit at specified work end count
+  --work-begin-exit-count WORK_BEGIN_EXIT_COUNT
+rahul@LAPTOP-MOMCE8G7:~/gem5$ ./build/X86/gem5.opt configs/deprecated/example/se.py --help | head -n 200
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 15:57:58
+gem5 executing on LAPTOP-MOMCE8G7, pid 499
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py --help
+
+usage: se.py [-h] [-n NUM_CPUS] [--sys-voltage SYS_VOLTAGE]
+             [--sys-clock SYS_CLOCK] [--list-mem-types]
+             [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+             [--mem-channels MEM_CHANNELS] [--mem-ranks MEM_RANKS]
+             [--mem-size MEM_SIZE] [--enable-dram-powerdown]
+             [--mem-channels-intlv MEM_CHANNELS_INTLV] [--memchecker]
+             [--external-memory-system EXTERNAL_MEMORY_SYSTEM]
+             [--tlm-memory TLM_MEMORY] [--caches] [--l2cache]
+             [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+             [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE]
+             [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE]
+             [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+             [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC]
+             [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS]
+             [--rel-max-tick TICKS] [--maxtime MAXTIME] [-P PARAM]
+             [--list-cpu-types]
+             [--cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--list-bp-types] [--list-indirect-bp-types]
+             [--bp-type {BranchPredictor,GshareBP}]
+             [--indirect-bp-type {SimpleIndirectPredictor}] [--list-rp-types]
+             [--list-hwp-types]
+             [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--checker] [--cpu-clock CPU_CLOCK] [--smt] [--elastic-trace-en]
+             [--inst-trace-file INST_TRACE_FILE]
+             [--data-trace-file DATA_TRACE_FILE] [--dist]
+             [--dist-sync-on-pseudo-op] [--is-switch] [--dist-rank DIST_RANK]
+             [--dist-size DIST_SIZE] [--dist-server-name DIST_SERVER_NAME]
+             [--dist-server-port DIST_SERVER_PORT]
+             [--dist-sync-repeat DIST_SYNC_REPEAT]
+             [--dist-sync-start DIST_SYNC_START]
+             [--ethernet-linkspeed ETHERNET_LINKSPEED]
+             [--ethernet-linkdelay ETHERNET_LINKDELAY] [-I MAXINSTS]
+             [--work-item-id WORK_ITEM_ID] [--num-work-ids NUM_WORK_IDS]
+             [--work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT]
+             [--work-end-exit-count WORK_END_EXIT_COUNT]
+             [--work-begin-exit-count WORK_BEGIN_EXIT_COUNT]
+             [--init-param INIT_PARAM] [--initialize-only]
+             [--simpoint-profile] [--simpoint-interval SIMPOINT_INTERVAL]
+             [--take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS]
+             [--restore-simpoint-checkpoint]
+             [--take-checkpoints TAKE_CHECKPOINTS]
+             [--max-checkpoints MAX_CHECKPOINTS]
+             [--checkpoint-dir CHECKPOINT_DIR] [-r CHECKPOINT_RESTORE]
+             [--checkpoint-at-end]
+             [--work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT]
+             [--work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT]
+             [--work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT]
+             [--restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--repeat-switch REPEAT_SWITCH] [-s STANDARD_SWITCH]
+             [-p PROG_INTERVAL] [-W WARMUP_INSTS] [--bench BENCH]
+             [-F FAST_FORWARD] [-S] [--at-instruction]
+             [--spec-input {ref,test,train,smred,mdred,lgred}]
+             [--arm-iset {arm,thumb,aarch64}] [--stats-root STATS_ROOT]
+             [--override-vendor-string OVERRIDE_VENDOR_STRING] [-c CMD]
+             [-o OPTIONS] [-e ENV] [-i INPUT] [--output OUTPUT]
+             [--errout ERROUT] [--chroot CHROOT] [--interp-dir INTERP_DIR]
+             [--redirects REDIRECTS] [--wait-gdb]
+
+options:
+  -h, --help            show this help message and exit
+  -n NUM_CPUS, --num-cpus NUM_CPUS
+  --sys-voltage SYS_VOLTAGE
+                        Top-level voltage for blocks running at system power
+                        supply
+  --sys-clock SYS_CLOCK
+                        Top-level clock for blocks running at system speed
+  --list-mem-types      List available memory types
+  --mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}
+                        type of memory to use
+  --mem-channels MEM_CHANNELS
+                        number of memory channels
+  --mem-ranks MEM_RANKS
+                        number of memory ranks per channel
+  --mem-size MEM_SIZE   Specify the physical memory size (single memory)
+  --enable-dram-powerdown
+                        Enable low-power states in DRAMInterface
+  --mem-channels-intlv MEM_CHANNELS_INTLV
+                        Memory channels interleave
+  --memchecker
+  --external-memory-system EXTERNAL_MEMORY_SYSTEM
+                        use external ports of this port_type for caches
+  --tlm-memory TLM_MEMORY
+                        use external port for SystemC TLM cosimulation
+  --caches
+  --l2cache
+  --num-dirs NUM_DIRS
+  --num-l2caches NUM_L2CACHES
+  --num-l3caches NUM_L3CACHES
+  --l1d_size L1D_SIZE
+  --l1i_size L1I_SIZE
+  --l2_size L2_SIZE
+  --l3_size L3_SIZE
+  --l1d_assoc L1D_ASSOC
+  --l1i_assoc L1I_ASSOC
+  --l2_assoc L2_ASSOC
+  --l3_assoc L3_ASSOC
+  --cacheline_size CACHELINE_SIZE
+  --ruby
+  -m TICKS, --abs-max-tick TICKS
+                        Run to absolute simulated tick specified including
+                        ticks from a restored checkpoint
+  --rel-max-tick TICKS  Simulate for specified number of ticks relative to the
+                        simulation start tick (e.g. if restoring a checkpoint)
+  --maxtime MAXTIME     Run to the specified absolute simulated time in
+                        seconds
+  -P PARAM, --param PARAM
+                        Set a SimObject parameter relative to the root node.
+                        An extended Python multi range slicing syntax can be
+                        used for arrays. For example:
+                        'system.cpu[0,1,3:8:2].max_insts_all_threads = 42'
+                        sets max_insts_all_threads for cpus 0, 1, 3, 5 and 7
+                        Direct parameters of the root object are not
+                        accessible, only parameters of its children.
+  --list-cpu-types      List available CPU types
+  --cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}
+                        type of cpu to run with
+  --list-bp-types       List available branch predictor types
+  --list-indirect-bp-types
+                        List available indirect branch predictor types
+  --bp-type {BranchPredictor,GshareBP}
+                        type of branch predictor to run with (if not set, use
+                        the default branch predictor of the selected CPU)
+  --indirect-bp-type {SimpleIndirectPredictor}
+                        type of indirect branch predictor to run with
+  --list-rp-types       List available replacement policy types
+  --list-hwp-types      List available hardware prefetcher types
+  --l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1
+                        instruction cache. (if not set, use the default
+                        prefetcher of the selected cache)
+  --l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1 data
+                        cache. (if not set, use the default prefetcher of the
+                        selected cache)
+  --l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L2 cache.
+                        (if not set, use the default prefetcher of the
+                        selected cache)
+  --checker
+  --cpu-clock CPU_CLOCK
+                        Clock for blocks running at CPU speed
+  --smt                 Only used if multiple programs are specified. If true,
+                        then the number of threads per cpu is same as the
+                        number of programs.
+  --elastic-trace-en    Enable capture of data dependency and instruction
+                        fetch traces using elastic trace probe.
+  --inst-trace-file INST_TRACE_FILE
+                        Instruction fetch trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --data-trace-file DATA_TRACE_FILE
+                        Data dependency trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --dist                Parallel distributed gem5 simulation.
+  --dist-sync-on-pseudo-op
+                        Use a pseudo-op to start dist-gem5 synchronization.
+  --is-switch           Select the network switch simulator process for
+                        adistributed gem5 run
+  --dist-rank DIST_RANK
+                        Rank of this system within the dist gem5 run.
+  --dist-size DIST_SIZE
+                        Number of gem5 processes within the dist gem5 run.
+  --dist-server-name DIST_SERVER_NAME
+                        Name of the message server host DEFAULT: localhost
+  --dist-server-port DIST_SERVER_PORT
+                        Message server listen port DEFAULT: 2200
+  --dist-sync-repeat DIST_SYNC_REPEAT
+                        Repeat interval for synchronisation barriers among
+                        dist-gem5 processes DEFAULT: --ethernet-linkdelay
+  --dist-sync-start DIST_SYNC_START
+                        Time to schedule the first dist synchronisation
+                        barrier DEFAULT:5200000000000t
+  --ethernet-linkspeed ETHERNET_LINKSPEED
+                        Link speed in bps DEFAULT: 10Gbps
+  --ethernet-linkdelay ETHERNET_LINKDELAY
+                        Link delay in seconds DEFAULT: 10us
+  -I MAXINSTS, --maxinsts MAXINSTS
+                        Total number of instructions to simulate (default: run
+                        forever)
+  --work-item-id WORK_ITEM_ID
+                        the specific work id for exit & checkpointing
+  --num-work-ids NUM_WORK_IDS
+                        Number of distinct work item types
+  --work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT
+                        exit when work starts on the specified cpu
+  --work-end-exit-count WORK_END_EXIT_COUNT
+                        exit at specified work end count
+  --work-begin-exit-count WORK_BEGIN_EXIT_COUNT
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./membench \
+  --caches --l2cache \
+  --l1dsize=64kB --l1isize=64kB
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 16:55:20
+gem5 executing on LAPTOP-MOMCE8G7, pid 1046
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./membench --caches --l2cache --l1dsize=64kB --l1isize=64kB
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+usage: se.py [-h] [-n NUM_CPUS] [--sys-voltage SYS_VOLTAGE] [--sys-clock SYS_CLOCK] [--list-mem-types]
+             [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+             [--mem-channels MEM_CHANNELS] [--mem-ranks MEM_RANKS] [--mem-size MEM_SIZE] [--enable-dram-powerdown] [--mem-channels-intlv MEM_CHANNELS_INTLV] [--memchecker]
+             [--external-memory-system EXTERNAL_MEMORY_SYSTEM] [--tlm-memory TLM_MEMORY] [--caches] [--l2cache] [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+             [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE] [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE] [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+             [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC] [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS] [--rel-max-tick TICKS] [--maxtime MAXTIME] [-P PARAM] [--list-cpu-types]
+             [--cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--list-bp-types] [--list-indirect-bp-types] [--bp-type {BranchPredictor,GshareBP}] [--indirect-bp-type {SimpleIndirectPredictor}] [--list-rp-types] [--list-hwp-types]
+             [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,FetchDirectedPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,SmsPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+             [--checker] [--cpu-clock CPU_CLOCK] [--smt] [--elastic-trace-en] [--inst-trace-file INST_TRACE_FILE] [--data-trace-file DATA_TRACE_FILE] [--dist] [--dist-sync-on-pseudo-op]
+             [--is-switch] [--dist-rank DIST_RANK] [--dist-size DIST_SIZE] [--dist-server-name DIST_SERVER_NAME] [--dist-server-port DIST_SERVER_PORT]
+             [--dist-sync-repeat DIST_SYNC_REPEAT] [--dist-sync-start DIST_SYNC_START] [--ethernet-linkspeed ETHERNET_LINKSPEED] [--ethernet-linkdelay ETHERNET_LINKDELAY] [-I MAXINSTS]
+             [--work-item-id WORK_ITEM_ID] [--num-work-ids NUM_WORK_IDS] [--work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT] [--work-end-exit-count WORK_END_EXIT_COUNT]
+             [--work-begin-exit-count WORK_BEGIN_EXIT_COUNT] [--init-param INIT_PARAM] [--initialize-only] [--simpoint-profile] [--simpoint-interval SIMPOINT_INTERVAL]
+             [--take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS] [--restore-simpoint-checkpoint] [--take-checkpoints TAKE_CHECKPOINTS] [--max-checkpoints MAX_CHECKPOINTS]
+             [--checkpoint-dir CHECKPOINT_DIR] [-r CHECKPOINT_RESTORE] [--checkpoint-at-end] [--work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT]
+             [--work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT] [--work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT]
+             [--restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+             [--repeat-switch REPEAT_SWITCH] [-s STANDARD_SWITCH] [-p PROG_INTERVAL] [-W WARMUP_INSTS] [--bench BENCH] [-F FAST_FORWARD] [-S] [--at-instruction]
+             [--spec-input {ref,test,train,smred,mdred,lgred}] [--arm-iset {arm,thumb,aarch64}] [--stats-root STATS_ROOT] [--override-vendor-string OVERRIDE_VENDOR_STRING] [-c CMD]
+             [-o OPTIONS] [-e ENV] [-i INPUT] [--output OUTPUT] [--errout ERROUT] [--chroot CHROOT] [--interp-dir INTERP_DIR] [--redirects REDIRECTS] [--wait-gdb]
+se.py: error: unrecognized arguments: --l1dsize=64kB --l1isize=64kB
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./membench \
+  --caches --l2cache \
+  --l1d_size=64kB --l1i_size=64kB
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 16:56:05
+gem5 executing on LAPTOP-MOMCE8G7, pid 1048
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./membench --caches --l2cache --l1d_size=64kB --l1i_size=64kB
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+warn: Base 10 memory/cache size 64kB will be cast to base 2 size 64KiB.
+warn: Base 10 memory/cache size 64kB will be cast to base 2 size 64KiB.
+src/base/loader/image_file_data.cc:105: fatal: fatal condition fd < 0 occurred: Failed to open file ./membench.
+This error typically occurs when the file path specified is incorrect.
+Memory Usage: 125788 KBytes
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+ls -l membench membench.c mem_bench mem_bench.c 2>/dev/null
+-rwxr-xr-x 1 rahul rahul 16056 Jan 22 15:42 mem_bench
+-rw-r--r-- 1 rahul rahul   339 Jan 22 15:29 mem_bench.c
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache \
+  --l1d_size=64kB --l1i_size=64kB
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 16:57:25
+gem5 executing on LAPTOP-MOMCE8G7, pid 1051
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache --l1d_size=64kB --l1i_size=64kB
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+warn: Base 10 memory/cache size 64kB will be cast to base 2 size 64KiB.
+warn: Base 10 memory/cache size 64kB will be cast to base 2 size 64KiB.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+mkdir -p results/run2_l1_64k
+cp m5out/stats.txt results/run2_l1_64k/stats.txt
+cp m5out/config.ini results/run2_l1_64k/config.ini
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "system\.cpu\.dcache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.cpu\.icache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.l2\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+
+grep -E "system.cpu.numCycles|system.cpu.cpi|system.cpu.dcache.overallAccesses::total" m5out/stats.txt
+system.cpu.dcache.demandHits::total           3706782                       # number of demand (read+write) hits (Count)
+system.cpu.dcache.demandMisses::total         1050017                       # number of demand (read+write) misses (Count)
+system.cpu.dcache.demandMissRate::total      0.220740                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.demandHits::total          15866714                       # number of demand (read+write) hits (Count)
+system.cpu.icache.demandMisses::total            1210                       # number of demand (read+write) misses (Count)
+system.cpu.icache.demandMissRate::total      0.000076                       # miss rate for demand accesses (Ratio)
+system.l2.demandHits::total                        84                       # number of demand (read+write) hits (Count)
+system.l2.demandMisses::total                 1051145                       # number of demand (read+write) misses (Count)
+system.l2.demandMissRate::total              0.999920                       # miss rate for demand accesses (Ratio)
+system.cpu.numCycles                         30639964                       # Number of cpu cycles simulated (Cycle)
+system.cpu.cpi                               2.002127                       # CPI: cycles per instruction (core level) ((Cycle/Count))
+system.cpu.dcache.overallAccesses::total      4756799                       # number of overall (read+write) accesses (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache \
+  --l2_size=1MB
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 16:59:29
+gem5 executing on LAPTOP-MOMCE8G7, pid 1066
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache --l2_size=1MB
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+warn: Base 10 memory/cache size 1MB will be cast to base 2 size 1MiB.
+warn: Base 10 memory/cache size 1MB will be cast to base 2 size 1MiB.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+mkdir -p results/run3_l2_1mb
+cp m5out/stats.txt results/run3_l2_1mb/stats.txt
+cp m5out/config.ini results/run3_l2_1mb/config.ini
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "system\.cpu\.dcache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.cpu\.icache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.l2\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+
+grep -E "system.cpu.numCycles|system.cpu.cpi|system.cpu.dcache.overallAccesses::total" m5out/stats.txt
+system.cpu.dcache.demandHits::total           3706782                       # number of demand (read+write) hits (Count)
+system.cpu.dcache.demandMisses::total         1050017                       # number of demand (read+write) misses (Count)
+system.cpu.dcache.demandMissRate::total      0.220740                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.demandHits::total          15866661                       # number of demand (read+write) hits (Count)
+system.cpu.icache.demandMisses::total            1263                       # number of demand (read+write) misses (Count)
+system.cpu.icache.demandMissRate::total      0.000080                       # miss rate for demand accesses (Ratio)
+system.l2.demandHits::total                       129                       # number of demand (read+write) hits (Count)
+system.l2.demandMisses::total                 1051153                       # number of demand (read+write) misses (Count)
+system.l2.demandMissRate::total              0.999877                       # miss rate for demand accesses (Ratio)
+system.cpu.numCycles                         30639964                       # Number of cpu cycles simulated (Cycle)
+system.cpu.cpi                               2.002127                       # CPI: cycles per instruction (core level) ((Cycle/Count))
+system.cpu.dcache.overallAccesses::total      4756799                       # number of overall (read+write) accesses (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache \
+  --l1d_assoc=4 --l1i_assoc=4 --l2_assoc=16
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 17:00:55
+gem5 executing on LAPTOP-MOMCE8G7, pid 1075
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache --l1d_assoc=4 --l1i_assoc=4 --l2_assoc=16
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+mkdir -p results/run4_assoc
+cp m5out/stats.txt results/run4_assoc/stats.txt
+cp m5out/config.ini results/run4_assoc/config.ini
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "system\.cpu\.dcache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.cpu\.icache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.l2\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+
+grep -E "system.cpu.numCycles|system.cpu.cpi|system.cpu.dcache.overallAccesses::total" m5out/stats.txt
+system.cpu.dcache.demandHits::total           3706796                       # number of demand (read+write) hits (Count)
+system.cpu.dcache.demandMisses::total         1050003                       # number of demand (read+write) misses (Count)
+system.cpu.dcache.demandMissRate::total      0.220737                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.demandHits::total          15866694                       # number of demand (read+write) hits (Count)
+system.cpu.icache.demandMisses::total            1230                       # number of demand (read+write) misses (Count)
+system.cpu.icache.demandMissRate::total      0.000078                       # miss rate for demand accesses (Ratio)
+system.l2.demandHits::total                        84                       # number of demand (read+write) hits (Count)
+system.l2.demandMisses::total                 1051151                       # number of demand (read+write) misses (Count)
+system.l2.demandMissRate::total              0.999920                       # miss rate for demand accesses (Ratio)
+system.cpu.numCycles                         30639964                       # Number of cpu cycles simulated (Cycle)
+system.cpu.cpi                               2.002127                       # CPI: cycles per instruction (core level) ((Cycle/Count))
+system.cpu.dcache.overallAccesses::total      4756799                       # number of overall (read+write) accesses (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache \
+  --cacheline_size=128
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 17:04:56
+gem5 executing on LAPTOP-MOMCE8G7, pid 1086
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache --cacheline_size=128
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+mkdir -p results/run5_line128
+cp m5out/stats.txt results/run5_line128/stats.txt
+cp m5out/config.ini results/run5_line128/config.ini
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "system\.cpu\.dcache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.cpu\.icache\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+grep -iE "system\.l2\.demand(Hits|Misses|MissRate).*total" m5out/stats.txt
+
+grep -E "system.cpu.numCycles|system.cpu.cpi|system.cpu.dcache.overallAccesses::total" m5out/stats.txt
+system.cpu.dcache.demandHits::total           4231535                       # number of demand (read+write) hits (Count)
+system.cpu.dcache.demandMisses::total          525263                       # number of demand (read+write) misses (Count)
+system.cpu.dcache.demandMissRate::total      0.110424                       # miss rate for demand accesses (Ratio)
+system.cpu.icache.demandHits::total          15867105                       # number of demand (read+write) hits (Count)
+system.cpu.icache.demandMisses::total             819                       # number of demand (read+write) misses (Count)
+system.cpu.icache.demandMissRate::total      0.000052                       # miss rate for demand accesses (Ratio)
+system.l2.demandHits::total                       167                       # number of demand (read+write) hits (Count)
+system.l2.demandMisses::total                  525917                       # number of demand (read+write) misses (Count)
+system.l2.demandMissRate::total              0.999683                       # miss rate for demand accesses (Ratio)
+system.cpu.numCycles                         30639964                       # Number of cpu cycles simulated (Cycle)
+system.cpu.cpi                               2.002127                       # CPI: cycles per instruction (core level) ((Cycle/Count))
+system.cpu.dcache.overallAccesses::total      4756798                       # number of overall (read+write) accesses (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -iE "system\.cpu\.mmu\.(dtb|itb)\." results/run1_baseline/stats.txt \
+  | grep -iE "Accesses|Misses" | head -n 120
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+grep -iE "dtb|itb|tlb" results/run1_baseline/stats.txt | head -n 60
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -iE "dtb|itb|tlb" m5out/stats.txt | head -n 60
+system.cpu.dtb_walker_cache.blockedCycles::no_mshrs            0                       # number of cycles access was blocked (Cycle)
+system.cpu.dtb_walker_cache.blockedCycles::no_wbuffers            0                       # number of cycles access was blocked (Cycle)
+system.cpu.dtb_walker_cache.blockedCycles::no_targets            0                       # number of cycles access was blocked (Cycle)
+system.cpu.dtb_walker_cache.blockedCauses::no_mshrs            0                       # number of times access was blocked (Count)
+system.cpu.dtb_walker_cache.blockedCauses::no_wbuffers            0                       # number of times access was blocked (Count)
+system.cpu.dtb_walker_cache.blockedCauses::no_targets            0                       # number of times access was blocked (Count)
+system.cpu.dtb_walker_cache.avgBlocked::no_mshrs          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.dtb_walker_cache.avgBlocked::no_wbuffers          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.dtb_walker_cache.avgBlocked::no_targets          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.dtb_walker_cache.replacements            0                       # number of replacements (Count)
+system.cpu.dtb_walker_cache.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.dtb_walker_cache.tags.tagsInUse            0                       # Average ticks per tags in use ((Tick/Count))
+system.cpu.dtb_walker_cache.tags.totalRefs            0                       # Total number of references to valid blocks. (Count)
+system.cpu.dtb_walker_cache.tags.sampledRefs            0                       # Sample count of references to valid blocks. (Count)
+system.cpu.dtb_walker_cache.tags.avgRefs          nan                       # Average number of references to valid blocks. ((Count/Count))
+system.cpu.dtb_walker_cache.tags.warmupTick            0                       # The tick when the warmup percentage was hit. (Tick)
+system.cpu.dtb_walker_cache.tags.tagAccesses            0                       # Number of tag accesses (Count)
+system.cpu.dtb_walker_cache.tags.dataAccesses            0                       # Number of data accesses (Count)
+system.cpu.dtb_walker_cache.tags.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.itb_walker_cache.blockedCycles::no_mshrs            0                       # number of cycles access was blocked (Cycle)
+system.cpu.itb_walker_cache.blockedCycles::no_wbuffers            0                       # number of cycles access was blocked (Cycle)
+system.cpu.itb_walker_cache.blockedCycles::no_targets            0                       # number of cycles access was blocked (Cycle)
+system.cpu.itb_walker_cache.blockedCauses::no_mshrs            0                       # number of times access was blocked (Count)
+system.cpu.itb_walker_cache.blockedCauses::no_wbuffers            0                       # number of times access was blocked (Count)
+system.cpu.itb_walker_cache.blockedCauses::no_targets            0                       # number of times access was blocked (Count)
+system.cpu.itb_walker_cache.avgBlocked::no_mshrs          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.itb_walker_cache.avgBlocked::no_wbuffers          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.itb_walker_cache.avgBlocked::no_targets          nan                       # average number of cycles each access was blocked ((Cycle/Count))
+system.cpu.itb_walker_cache.replacements            0                       # number of replacements (Count)
+system.cpu.itb_walker_cache.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.itb_walker_cache.tags.tagsInUse            0                       # Average ticks per tags in use ((Tick/Count))
+system.cpu.itb_walker_cache.tags.totalRefs            0                       # Total number of references to valid blocks. (Count)
+system.cpu.itb_walker_cache.tags.sampledRefs            0                       # Sample count of references to valid blocks. (Count)
+system.cpu.itb_walker_cache.tags.avgRefs          nan                       # Average number of references to valid blocks. ((Count/Count))
+system.cpu.itb_walker_cache.tags.warmupTick            0                       # The tick when the warmup percentage was hit. (Tick)
+system.cpu.itb_walker_cache.tags.tagAccesses            0                       # Number of tag accesses (Count)
+system.cpu.itb_walker_cache.tags.dataAccesses            0                       # Number of data accesses (Count)
+system.cpu.itb_walker_cache.tags.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.mmu.dtb.rdAccesses                  549551                       # TLB accesses on read requests (Count)
+system.cpu.mmu.dtb.wrAccesses                 4215537                       # TLB accesses on write requests (Count)
+system.cpu.mmu.dtb.exAccesses                       0                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.rdMisses                      8364                       # TLB misses on read requests (Count)
+system.cpu.mmu.dtb.wrMisses                     16418                       # TLB misses on write requests (Count)
+system.cpu.mmu.dtb.exMisses                         0                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.walker.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.mmu.itb.rdAccesses                       0                       # TLB accesses on read requests (Count)
+system.cpu.mmu.itb.wrAccesses                       0                       # TLB accesses on write requests (Count)
+system.cpu.mmu.itb.exAccesses                15867974                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdMisses                         0                       # TLB misses on read requests (Count)
+system.cpu.mmu.itb.wrMisses                         0                       # TLB misses on write requests (Count)
+system.cpu.mmu.itb.exMisses                       199                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.itb.walker.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -E "system\.cpu\.mmu\.(dtb|itb)\.(rdAccesses|wrAccesses|exAccesses|rdMisses|wrMisses|exMisses)" \
+  results/run1_baseline/stats.txt
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+find results -maxdepth 3 -type f -name "stats.txt" | sort
+results/run1_baseline/stats.txt
+results/run2_l1_64k/stats.txt
+results/run3_l2_1mb/stats.txt
+results/run4_assoc/stats.txt
+results/run5_line128/stats.txt
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -iE "system\.cpu\.mmu\.(dtb|itb)\.(rdAccesses|wrAccesses|exAccesses|rdMisses|wrMisses|exMisses)" \
+  results/run1_baseline/stats.txt
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -i "system.cpu.mmu" results/run1_baseline/stats.txt | head -n 40
+rahul@LAPTOP-MOMCE8G7:~/gem5$ grep -i "mmu" results/run1_baseline/stats.txt | head -n 40
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+rm -rf m5out
+./build/X86/gem5.opt configs/deprecated/example/se.py \
+  -c ./mem_bench \
+  --caches --l2cache
+
+mkdir -p results/run1b_tlb_baseline
+cp m5out/stats.txt results/run1b_tlb_baseline/stats.txt
+cp m5out/config.ini results/run1b_tlb_baseline/config.ini
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 25.1.0.0
+gem5 compiled Jan 13 2026 19:33:55
+gem5 started Jan 22 2026 17:11:07
+gem5 executing on LAPTOP-MOMCE8G7, pid 1114
+command line: ./build/X86/gem5.opt configs/deprecated/example/se.py -c ./mem_bench --caches --l2cache
+
+warn: The se.py script is deprecated. It will be removed in future releases of  gem5.
+Global frequency set at 1000000000000 ticks per second
+warn: No dot file generated. Please install pydot to generate the dot file and pdf.
+src/mem/dram_interface.cc:690: warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+src/base/statistics.hh:279: warn: One of the stats is a legacy stat. Legacy stat is a stat that does not belong to any statistics::Group. Legacy stat is deprecated.
+system.remote_gdb: Listening for connections on port 7000
+**** REAL SIMULATION ****
+src/sim/mem_state.cc:443: info: Increasing stack size by one page.
+src/sim/syscall_emul.cc:86: warn: ignoring syscall set_robust_list(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall rseq(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+src/sim/syscall_emul.cc:86: warn: ignoring syscall mprotect(...)
+sum=2199019061248
+Exiting @ tick 15319962500 because exiting with last active thread context
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+grep -iE "system\.cpu\.mmu\.(dtb|itb)\." results/run1b_tlb_baseline/stats.txt | head -n 40
+system.cpu.mmu.dtb.rdAccesses                  549551                       # TLB accesses on read requests (Count)
+system.cpu.mmu.dtb.wrAccesses                 4215538                       # TLB accesses on write requests (Count)
+system.cpu.mmu.dtb.exAccesses                       0                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.rdMisses                      8364                       # TLB misses on read requests (Count)
+system.cpu.mmu.dtb.wrMisses                     16418                       # TLB misses on write requests (Count)
+system.cpu.mmu.dtb.exMisses                         0                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.walker.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+system.cpu.mmu.itb.rdAccesses                       0                       # TLB accesses on read requests (Count)
+system.cpu.mmu.itb.wrAccesses                       0                       # TLB accesses on write requests (Count)
+system.cpu.mmu.itb.exAccesses                15867974                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdMisses                         0                       # TLB misses on read requests (Count)
+system.cpu.mmu.itb.wrMisses                         0                       # TLB misses on write requests (Count)
+system.cpu.mmu.itb.exMisses                       199                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.itb.walker.power_state.pwrStateResidencyTicks::UNDEFINED  15319962500                       # Cumulative time (in ticks) in various power states (Tick)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -iE "system\.cpu\.mmu\.(dtb|itb)\.(rdAccesses|wrAccesses|exAccesses|rdMisses|wrMisses|exMisses)" \
+  results/run1b_tlb_baseline/stats.txt
+system.cpu.mmu.dtb.rdAccesses                  549551                       # TLB accesses on read requests (Count)
+system.cpu.mmu.dtb.wrAccesses                 4215538                       # TLB accesses on write requests (Count)
+system.cpu.mmu.dtb.exAccesses                       0                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.rdMisses                      8364                       # TLB misses on read requests (Count)
+system.cpu.mmu.dtb.wrMisses                     16418                       # TLB misses on write requests (Count)
+system.cpu.mmu.dtb.exMisses                         0                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdAccesses                       0                       # TLB accesses on read requests (Count)
+system.cpu.mmu.itb.wrAccesses                       0                       # TLB accesses on write requests (Count)
+system.cpu.mmu.itb.exAccesses                15867974                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdMisses                         0                       # TLB misses on read requests (Count)
+system.cpu.mmu.itb.wrMisses                         0                       # TLB misses on write requests (Count)
+system.cpu.mmu.itb.exMisses                       199                       # TLB misses on execute (instr) requests (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ cd /home/rahul/gem5
+
+grep -iE "system\.cpu\.mmu\.(dtb|itb)\.(rdAccesses|wrAccesses|exAccesses|rdMisses|wrMisses|exMisses)" \
+  results/run5_line128/stats.txt
+system.cpu.mmu.dtb.rdAccesses                  549551                       # TLB accesses on read requests (Count)
+system.cpu.mmu.dtb.wrAccesses                 4215537                       # TLB accesses on write requests (Count)
+system.cpu.mmu.dtb.exAccesses                       0                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.dtb.rdMisses                      8364                       # TLB misses on read requests (Count)
+system.cpu.mmu.dtb.wrMisses                     16418                       # TLB misses on write requests (Count)
+system.cpu.mmu.dtb.exMisses                         0                       # TLB misses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdAccesses                       0                       # TLB accesses on read requests (Count)
+system.cpu.mmu.itb.wrAccesses                       0                       # TLB accesses on write requests (Count)
+system.cpu.mmu.itb.exAccesses                15867974                       # TLB accesses on execute (instr) requests (Count)
+system.cpu.mmu.itb.rdMisses                         0                       # TLB misses on read requests (Count)
+system.cpu.mmu.itb.wrMisses                         0                       # TLB misses on write requests (Count)
+system.cpu.mmu.itb.exMisses                       199                       # TLB misses on execute (instr) requests (Count)
+rahul@LAPTOP-MOMCE8G7:~/gem5$ python3 - << 'PY'
+dtb_rdA=549551
+dtb_wrA=4215538
+dtb_rdM=8364
+dtb_wrM=16418
+
+itb_exA=15867974
+itb_exM=199
+
+dtb_access=dtb_rdA+dtb_wrA
+dtb_miss=dtb_rdM+dtb_wrM
+print("DTB accesses:", dtb_access)
+print("DTB misses:", dtb_miss)
+print("DTB miss rate:", dtb_miss/dtb_access)
+
+print("ITB accesses:", itb_exA)
+print("ITB misses:", itb_exM)
+print("ITB miss rate:", itb_exM/itb_exA)
+PY
+DTB accesses: 4765089
+DTB misses: 24782
+DTB miss rate: 0.005200742315620967
+ITB accesses: 15867974
+ITB misses: 199
+ITB miss rate: 1.2540983492914722e-05
+rahul@LAPTOP-MOMCE8G7:~/gem5$ python3 - << 'PY'
+dtb_rdA=549551
+dtb_wrA=4215538
+dtb_rdM=8364
+dtb_wrM=16418
+
+itb_exA=15867974
+itb_exM=199
+
+dtb_access=dtb_rdA+dtb_wrA
+dtb_miss=dtb_rdM+dtb_wrM
+print("DTB accesses:", dtb_access)
+print("DTB misses:", dtb_miss)
+print("DTB miss rate:", dtb_miss/dtb_access)
+
+print("ITB accesses:", itb_exA)
+print("ITB misses:", itb_exM)
+print("ITB miss rate:", itb_exM/itb_exA)
+PY
+DTB accesses: 4765089
+DTB misses: 24782
+DTB miss rate: 0.005200742315620967
+ITB accesses: 15867974
+ITB misses: 199
+ITB miss rate: 1.2540983492914722e-05
+rahul@LAPTOP-MOMCE8G7:~/gem5$ python3 - << 'PY'
+# Numbers from your grep outputs (baseline and run5 were identical in your screenshots)
+dtb_rdA=549551
+dtb_wrA=4215538
+dtb_rdM=8364
+dtb_wrM=16418
+
+itb_exA=15867974
+itb_exM=199
+
+dtb_access=dtb_rdA+dtb_wrA
+dtb_miss=dtb_rdM+dtb_wrM
+
+print
+> c
+> ^C
+rahul@LAPTOP-MOMCE8G7:~/gem5$ python3 - << 'PY'
+# Numbers from your grep outputs (baseline and run5 were identical in your screenshots)
+dtb_rdA=549551
+dtb_wrA=4215538
+dtb_rdM=8364
+dtb_wrM=16418
+
+itb_exA=15867974
+itb_exM=199
+
+dtb_access=dtb_rdA+dtb_wrA
+dtb_miss=dtb_rdM+dtb_wrM
+
+print("DTB accesses:", dtb_access)
+print("DTB misses:", dtb_miss)
+print("DTB miss rate:", dtb_miss/dtb_access)
+
+print("ITB accesses:", itb_exA)
+print("ITB misses:", itb_exM)
+print("ITB miss rate:", itb_exM/itb_exA)
+PY
+DTB accesses: 4765089
+DTB misses: 24782
+DTB miss rate: 0.005200742315620967
+ITB accesses: 15867974
+ITB misses: 199
+ITB miss rate: 1.2540983492914722e-05
+rahul@LAPTOP-MOMCE8G7:~/gem5$

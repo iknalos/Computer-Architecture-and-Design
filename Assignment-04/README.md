@@ -19,8 +19,3 @@ This repository contains the deliverables for Assignment 4 (Parts 1 & 2): a writ
 
 > Note: Your machine paths may differ. Commands below assume you are in the gem5 repository root.
 
-## Build (if needed)
-If you already have `build/X86/gem5.opt`, you can skip this.
-```bash
-cd ~/gem5
-scons build/X86/gem5.opt -j$(nproc)
